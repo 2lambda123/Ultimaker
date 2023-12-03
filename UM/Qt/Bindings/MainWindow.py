@@ -64,13 +64,21 @@ class MainWindow(QQuickWindow):
                                   int(self._preferences.getValue("general/window_width")),
                                   int(self._preferences.getValue("general/window_height")))
 
-        if not self._preferences.getValue("general/restore_window_geometry"):
+        if (not self._preferences.getValue("general/restore_window_geometry") or
+                self._preferences.getValue("general/last_shutdown_severity") == Application.ShutdownSeverity.HardCrash):
             # Ignore whatever the preferences said.
-            Logger.log("i", "Not restoring window geometry from preferences because 'restore_window_geometry' is false")
+            Logger.log("i", "Window geometry not restored from preferences. "
+                            "See 'general/restore_window_geometry' and/or 'general/last_shutdown_severity' for cause.")
             restored_geometry = QRect(self.DEFAULT_WINDOW_LEFT,
                                       self.DEFAULT_WINDOW_TOP,
                                       self.DEFAULT_WINDOW_WIDTH,
                                       self.DEFAULT_WINDOW_HEIGHT)
+
+        # Now set the 'last shutdown normal' to False, then, when the app closes normally, set it back to True.
+        self._preferences.setValue("general/last_shutdown_severity", Application.ShutdownSeverity.HardCrash)
+        Application.getInstance().applicationShuttingDown.connect(
+            lambda: self._preferences.setValue("general/last_shutdown_severity",
+                                               Application.ShutdownSeverity.NormalShutdown))
 
         # Make sure restored geometry is not outside the currently available screens
         screen_found = False
