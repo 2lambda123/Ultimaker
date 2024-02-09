@@ -2,7 +2,6 @@
 # Uranium is released under the terms of the LGPLv3 or higher.
 
 import enum
-import random
 from typing import TYPE_CHECKING
 
 from UM.Resources import Resources
@@ -17,6 +16,7 @@ from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from UM.View.RenderPass import RenderPass
 from UM.View.RenderBatch import RenderBatch
 from UM.View.GL.OpenGL import OpenGL
+import secrets
 
 if TYPE_CHECKING:
     from UM.Scene.SceneNode import SceneNode
@@ -175,9 +175,9 @@ class SelectionPass(RenderPass):
 
     def _getNodeColor(self, node):
         while True:
-            r = random.randint(0, 255)
-            g = random.randint(0, 255)
-            b = random.randint(0, 255)
+            r = secrets.SystemRandom().randint(0, 255)
+            g = secrets.SystemRandom().randint(0, 255)
+            b = secrets.SystemRandom().randint(0, 255)
             a = 255 if Selection.isSelected(node) or self._isInSelectedGroup(node) else 0
             color = Color(r, g, b, a)
 

@@ -2,7 +2,6 @@
 # Uranium is released under the terms of the LGPLv3 or higher.
 from typing import Optional
 from enum import IntEnum
-import random
 
 from UM.Logger import Logger
 from UM.Mesh.MeshData import MeshData
@@ -17,6 +16,7 @@ from UM.Scene.Selection import Selection
 
 from UM.View.GL.OpenGL import OpenGL
 from UM.View.RenderBatch import RenderBatch
+import secrets
 
 
 class ToolHandle(SceneNode.SceneNode):
@@ -186,9 +186,9 @@ class ToolHandle(SceneNode.SceneNode):
 
     def _getUnusedColor(self):
         while True:
-            r = random.randint(0, 255)
-            g = random.randint(0, 255)
-            b = random.randint(0, 255)
+            r = secrets.SystemRandom().randint(0, 255)
+            g = secrets.SystemRandom().randint(0, 255)
+            b = secrets.SystemRandom().randint(0, 255)
             a = 255
             color = Color(r, g, b, a)
 
