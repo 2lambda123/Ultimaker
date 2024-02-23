@@ -47,6 +47,8 @@ class ToolHandle(SceneNode.SceneNode):
         pass
 
     def __init__(self, parent = None):
+        """"""
+        
         super().__init__(parent)
 
         self._disabled_axis_color = None
@@ -79,27 +81,41 @@ class ToolHandle(SceneNode.SceneNode):
         Application.getInstance().engineCreatedSignal.connect(self._onEngineCreated)
 
     def getLineMesh(self) -> Optional[MeshData]:
+        """"""
+        
         return self._line_mesh
 
     def setLineMesh(self, mesh: MeshData) -> None:
+        """"""
+        
         self._line_mesh = mesh
         self.meshDataChanged.emit(self)
 
     def getSolidMesh(self) -> Optional[MeshData]:
+        """"""
+        
         return self._solid_mesh
 
     def setSolidMesh(self, mesh: MeshData) -> None:
+        """"""
+        
         self._solid_mesh = mesh
         self.meshDataChanged.emit(self)
 
     def getSelectionMesh(self) -> Optional[MeshData]:
+        """"""
+        
         return self._selection_mesh
 
     def setSelectionMesh(self, mesh: MeshData) -> None:
+        """"""
+        
         self._selection_mesh = mesh
         self.meshDataChanged.emit(self)
 
     def render(self, renderer) -> bool:
+        """"""
+        
         if not self._enabled:
             return True
 
@@ -127,6 +143,8 @@ class ToolHandle(SceneNode.SceneNode):
         return True
 
     def setActiveAxis(self, axis: Optional[int]) -> None:
+        """"""
+        
         if axis == self._active_axis or not self._shader:
             return
 
@@ -141,12 +159,20 @@ class ToolHandle(SceneNode.SceneNode):
         return self._active_axis
 
     def isAxis(self, value):
+        """"""
+        
+        """"""
+        
         return value in self._axis_color_map
 
     def getExtraWidgetsColorMap(self):
+        """"""
+        
         return self._extra_widgets_color_map
 
     def buildMesh(self) -> None:
+        """"""
+        
         # This method should be overridden by toolhandle implementations
         pass
 
@@ -155,11 +181,17 @@ class ToolHandle(SceneNode.SceneNode):
             self.setPosition(Selection.getSelectionCenter())
 
     def setEnabled(self, enable: bool):
+        """"""
+        
+        """"""
+        
         super().setEnabled(enable)
         # Force an update
         self._onSelectionCenterChanged()
 
     def _onEngineCreated(self) -> None:
+        """"""
+        
         from UM.Qt.QtApplication import QtApplication
         theme = QtApplication.getInstance().getTheme()
         if theme is None:
@@ -185,6 +217,8 @@ class ToolHandle(SceneNode.SceneNode):
         self.buildMesh()
 
     def _getUnusedColor(self):
+        """"""
+        
         while True:
             r = secrets.SystemRandom().randint(0, 255)
             g = secrets.SystemRandom().randint(0, 255)

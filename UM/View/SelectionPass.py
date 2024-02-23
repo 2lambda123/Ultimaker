@@ -34,6 +34,8 @@ class SelectionPass(RenderPass):
         FACES = "faces"
 
     def __init__(self, width, height):
+        """"""
+        
         super().__init__("selection", width, height, -999)
 
         self._shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "selection.shader"))
@@ -67,6 +69,8 @@ class SelectionPass(RenderPass):
         self._output = None
 
     def _onActiveToolChanged(self):
+        """"""
+        
         self._toolhandle_selection_map = self._default_toolhandle_selection_map.copy()
 
         active_tool = Application.getInstance().getController().getActiveTool()
@@ -81,6 +85,8 @@ class SelectionPass(RenderPass):
             self._toolhandle_selection_map[self._dropAlpha(color)] = name
 
     def _onSelectedFaceChanged(self):
+        """"""
+        
         self._mode = SelectionPass.SelectionMode.FACES if Selection.getFaceSelectMode() else SelectionPass.SelectionMode.OBJECTS
 
     def render(self):
@@ -91,6 +97,8 @@ class SelectionPass(RenderPass):
             self._renderFacesMode()
 
     def _renderObjectsMode(self):
+        """"""
+        
         self._selection_map = self._toolhandle_selection_map.copy()
 
         batch = RenderBatch(self._shader)
@@ -120,6 +128,8 @@ class SelectionPass(RenderPass):
         self.release()
 
     def _renderFacesMode(self):
+        """"""
+        
         batch = RenderBatch(self._face_shader)
 
         selectable_objects = False
@@ -174,6 +184,8 @@ class SelectionPass(RenderPass):
         )
 
     def _getNodeColor(self, node):
+        """"""
+        
         while True:
             r = secrets.SystemRandom().randint(0, 255)
             g = secrets.SystemRandom().randint(0, 255)
@@ -189,6 +201,8 @@ class SelectionPass(RenderPass):
         return color
 
     def _dropAlpha(self, color):
+        """"""
+        
         return Color(color.r, color.g, color.b, 0.0)
 
     def _isInSelectedGroup(self, node: "SceneNode") -> bool:
